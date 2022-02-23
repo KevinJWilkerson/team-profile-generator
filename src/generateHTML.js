@@ -12,7 +12,7 @@ const generateEmployeeHTML = (employeeData) => {
       if (officeNumber) {
         extended = `<h2>Office Number: ${officeNumber}</h3>`;
       } else if (github) {
-        extended = `<h2>Github: <a href="github.com/${github}" target="_blank">${github}</a></h3>`;
+        extended = `<h2>Github: <a href="https://www.github.com/${github}" target="_blank">${github}</a></h3>`;
       } else if (school) {
         extended = `<h2>School: ${school}</h3>`;
       }
@@ -58,7 +58,7 @@ module.exports = (employeeData) => {
         </div>
         </header>
         <main class="container my-5">
-            ${generateHTML(employeeData)}
+            ${generateEmployeeHTML(employeeData)}
         </main>
         <footer class="container text-center py-3">
         <h3 class="text-dark">&copy;2020 by Kevin Wilkerson</h3>
