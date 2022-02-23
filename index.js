@@ -1,8 +1,8 @@
-const inquirer = require("inquirer");
-const path = require("path");
-const generatePage = require("./src/generateHTML");
-const { copyFile, writeFile } = require("./utils/generate-page");
 const fs = require("fs");
+const { writeFile, copyFile } = require("fs");
+const inquirer = require("inquirer");
+const generateHTML = require("./src/generateHTML");
+
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -21,7 +21,7 @@ const promptManager = () => {
       {
         type: "input",
         message: "What is the team manager's name?",
-        name: "name",
+        name: "managerNameInput",
         validate: (managerNameInput) => {
           if (managerNameInput) {
             return true;
@@ -34,7 +34,7 @@ const promptManager = () => {
       {
         type: "input",
         message: "What is the team manager's employee ID?",
-        name: "id",
+        name: "managerIdInput",
         validate: (managerIdInput) => {
           if (managerIdInput) {
             return true;
@@ -47,7 +47,7 @@ const promptManager = () => {
       {
         type: "input",
         message: "What is the team manager's email address?",
-        name: "email",
+        name: "managerEmailInput",
         validate: (managerEmailInput) => {
           if (managerEmailInput) {
             return true;
@@ -60,7 +60,7 @@ const promptManager = () => {
       {
         type: "input",
         message: "What is the team manager's office number?",
-        name: "officeNumber",
+        name: "managerOfficeNumberInput",
         validate: (managerOfficeNumberInput) => {
           if (managerOfficeNumberInput) {
             return true;
@@ -80,6 +80,7 @@ const promptManager = () => {
       );
       teamMembers.push(manager);
       idArr.push(answers.managerIdInput);
+      console.log(teamMembers);
       promptNonManager();
     });
 };
@@ -114,8 +115,8 @@ const promptNonManager = () => {
           break;
         default:
           console.log(teamMembers);
-          let pageHTML = generatePage(teamMembers);
-          return writeFile(pageHTML);
+          let pageHTML = generateHTML(teamMembers);
+          return writeHTML(pageHTML);
       }
     });
 };
@@ -269,3 +270,22 @@ const internEntry = () => {
 };
 
 promptManager();
+
+const writeHTML = (data) => {
+  fs.writeFile("./dist/index.html", data, (err) => {
+    if (err) {
+      return console.log(err);
+    }
+    console.log("index.html successfully created!");
+  });
+};
+
+// promptManager()
+//   .then((answers) => {
+//     console.log(answers);
+//     return answers;
+//   })
+//   .then((answers) => {
+//     const html = generateHTML(answers);
+//     writeHTML(html);
+//   });
